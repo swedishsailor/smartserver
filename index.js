@@ -6,25 +6,12 @@ const constants = require('./constants');
 const EventEmitter = require('events');
 const express = require('express');
 const app = express();
-const mysql = require('mysql');
 
-/* Database connection */
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'smartserver'
-});
-
-db.connect((err) => {
-   if(err){
-        throw err;
-    }
-    console.log('My sql connected');
-})
+//Middleware
+app.use(express.json());
 
 app.get('/', (req,res)=>{
-    db.query('SELECT * FROM user'), (err,result)=>{
+    db.query('SELECT * FROM users'), (err,result)=>{
         if (err){
             console.log(err)
         }else{
@@ -41,7 +28,7 @@ emitter.on('messageLogged', (e) => {
 })
 
 app.listen(constants.PORT || 3000, ()=>{
-    console.log('Server is running on port '+ constants.PORT + '...');
+    console.log(`Server is running on port ${constants.PORT}...`);
 })
 
 emitter.emit('messageLogged', {id:1, url:'url'});
