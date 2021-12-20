@@ -10,17 +10,6 @@ const app = express();
 //Middleware
 app.use(express.json());
 
-app.get('/', (req,res)=>{
-    db.query('SELECT * FROM users'), (err,result)=>{
-        if (err){
-            console.log(err)
-        }else{
-            console.log(res.send(result));
-        }
-        
-    };
-})
-
 const emitter = new EventEmitter();
 
 emitter.on('messageLogged', (e) => {
@@ -40,6 +29,8 @@ app.get('/', (req,res) => {
        '<h1>Yoo!</h1>'
     )
 })
+
+app.use('/users', require('./routes/postRoutes'));
 
 app.on('connection', ()=>{
     console.log('Someone connected');
